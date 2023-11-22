@@ -1,0 +1,51 @@
+---
+title: "High Priority Firesheds"
+editor: visual
+---
+
+```{r, echo=FALSE, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+library(mapview)
+library(sf)
+library(kableExtra)
+library(dplyr)
+
+options(scipen=999)
+
+htmltools::img(src = knitr::image_uri("img/forsys_logo.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:10px; width: 143px; height: 128px') # Added width and height as CSS
+```
+
+![Wildfire Crisis Strategy high risk firesheds.](img/Crisis_map.png)
+
+# How were the "All-Lands" high risk firesheds selected?
+
+The Wildfire Crisis Strategy focuses on addressing wildfire risk to communities. The strategy was based in part on a [2021 study](https://www.fs.usda.gov/research/treesearch/63129) that demonstrated how a disproportionate amount of community exposure from national forests was concentrated on a small fraction of the entire forest system. The study analyzed a 10-year ramp up of current forest and fuel management that targeted the source of wildfire exposure to developed areas originating on national forest lands and simulated treatment in 25,000-acre planning areas that accounted for 80% of the predicted treatable exposure. Treatments were limited to areas not protected from management in conifer forests.  Responding to subsequent leadership interest, the research team expanded the analysis to include forested non-USFS lands in two additional "zones": non-USFS land that was conifer forest, and non-USFS land that was high-hazard shrubland (including chaparral).  The final three-zone scenario results (conducted at the 25,000-acre project scale) were summarized to the fireshed level, and sorted from the fireshed with the highest treated exposure to the lowest.  The 141 All-Lands high risk firesheds selected from this list of 1,254 firesheds represent the top firesheds accounting for 80% of the treatable exposure in the entire scenario.
+
+```{r echo = FALSE, results = 'asis', warning=FALSE, message=FALSE}
+
+# ForSys scenario outputs, summarized to fireshed for the 3-zone scenario
+load('data.Rdata')
+
+kableExtra::kbl(west.fshed[1:10,], caption = "Top ten firesheds output from the zoned ForSys scenario", digits=2) %>%
+      kable_styling(full_width = TRUE)
+```
+
+# How were the "USFS-Only" high risk firesheds selected?
+
+In addition to the firesheds identified as part of the three-zoned western US scenario, additional firesheds were selected based on building exposure concentrated on US Forest Service lands. Note that this does not mean the original scenario did not identify such lands, it did, but this new set of firesheds aimed to identify additional firesheds not previously selected targeting exposure originating on USFS lands. Rather than utilizing scenario results, this selection of firesheds looked at the first zone identified above: national forests lands with a high level of exposure originating on either USFS conifer lands or USFS forested lands in the west and east, respectively.
+
+This process identified an additional 20 firesheds in the eastern US not identified in the original scenario which was conducted only on firesheds in the western US Forest Service regions (Regions 1-6). It also added 130 additional firesheds in the western US.
+
+# How much exposure is treated in the Wildfire Crisis Strategy high-risk firesheds?
+
+The published "10-year plan" to target the source of community exposure from national forest lands targeted treating 80% of the building exposure where treatments were possible.  As noted in [prior studies](https://www.fs.usda.gov/research/treesearch/58114), only 20% of building exposure from wildfire originates on national forest lands. Of the national forest portion, published research has shown that 34% of the exposure originated on protected lands where restrictions on mechanical treatments limit activities.
+
+The figure below shows how the area targeted for treatment in the scenario was built from progressive land base filters on national forest lands in the western US. Each outer ring is a subset of its inner ring. The final outer ring represents the land base used in the scenario in the "10-year plan" or zone 1 of the All-Lands scenario: conifer forest stands available for mechanical treatment (not protected) that have not been recently disturbed by wildfires or treatments (including wildfires as of October 2020), and the dark gold segment is what was treated in the scenario representing 80% of total treatable exposure (yellow segments). Figure is figure 2 in the published ["10-year plan."](https://www.fs.usda.gov/research/treesearch/63129)
+
+![Progessive land base filters for determining treatment target in the "10-year plan".](img/FR_10yr_Landbase_Sunburst_labeled.png){width=50%}
+
+The high risk firesheds treat the top 80% of the exposure identified in the All-Lands three-zone scenario (the scenario treated lands where fires ignite and expose 9,223 buildings based on simulation modeling).
